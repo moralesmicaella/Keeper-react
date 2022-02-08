@@ -98,16 +98,99 @@ form.create-note button {
   border-radius: 50%;
   width: 50px;
   height: 50px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   outline: none;
 }
 
-form.create-note button:hover {
-  background: #c4930d;
+form.create-note button:hover,
+.submitButton:hover {
+  box-shadow: 0 1px 3px #c4930d;
 }
 
 .list-container {
   display: inline-block;
   padding: 20px;
+}
+
+.login-container {
+  background-color: #fff;
+  border-radius: 5px;
+  width: 500px;
+  height: 600px;
+  margin: 5% auto;
+  padding: 80px 0;
+  text-align: center;
+  box-shadow: 0 2px 5px #ccc;
+}
+
+.login-container h1 {
+  margin-bottom: 35px;
+}
+
+input[type="email"],
+input[type="password"] {
+  border: 1px solid #ccc;
+  background-color: #e7f0fe;
+  color: white;
+  font-weight: 300;
+  font-size: 14px;
+}
+
+.submitButton,
+form label,
+input[type="email"],
+input[type="password"] {
+  width: 350px;
+  border-radius: 5px;
+  font-family: "Source Sans Pro", sans-serif;
+  margin: 0 auto 10px auto;
+  padding: 12px 15px;
+  display: block;
+  text-align: center;
+}
+
+input[type="password"] {
+  margin-bottom: 35px;
+}
+
+.submitButton {
+  appearance: none;
+  align-items: center;
+  outline: 0;
+  background-color: #f5ba13;
+  border: 0;
+  color: #fff;
+  font-size: 16px;
+  margin: auto;
+  padding: 12px 15px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+form label {
+  text-align: left;
+  padding: 0;
+}
+
+form p {
+  width: 350px;
+  text-align: center;
+  border-bottom: 1px solid #000;
+  line-height: 0.1em;
+  margin: 30px auto;
+}
+
+p span {
+  background: #fff;
+  padding: 0 10px;
+}
+
+.submitButton img {
+  width: 20px;
+  height: 20px;
+  margin: auto 20px;
+}
+
+.buttonImg {
+  display: flex;
+  position: absolute;
 }
