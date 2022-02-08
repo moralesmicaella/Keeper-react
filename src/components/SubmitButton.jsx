@@ -1,10 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Button(props) {
-  const style = { textDecoration: "none" };
+function SubmitButton(props) {
   return (
-    <Link to={props.path} style={style}>
+    <Link to={props.path} style={{ textDecoration: "none" }}>
       <div className="submitButton" style={props.style}>
         {props.img !== null && (
           <div className="buttonImg">
@@ -17,6 +16,4 @@ function Button(props) {
   );
 }
 
-export default Button;
-
-// https://freesvg.org/img/1534129544.png
+export default SubmitButton;

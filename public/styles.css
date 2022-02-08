@@ -146,7 +146,7 @@ input[type="password"] {
   margin: 0 auto 10px auto;
   padding: 12px 15px;
   display: block;
-  text-align: center;
+  text-align: left;
 }
 
 input[type="password"] {
@@ -164,6 +164,7 @@ input[type="password"] {
   margin: auto;
   padding: 12px 15px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  text-align: center;
 }
 
 form label {
@@ -174,7 +175,7 @@ form label {
 form p {
   width: 350px;
   text-align: center;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid #ccc;
   line-height: 0.1em;
   margin: 30px auto;
 }
@@ -193,4 +194,25 @@ p span {
 .buttonImg {
   display: flex;
   position: absolute;
+}
+
+header ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.headerTitle {
+  float: left;
+}
+
+.logoutBtn {
+  float: right;
+}
+
+.logoutBtn h1:hover,
+.note button:hover {
+  cursor: pointer;
+  color: #c4930d;
 }
