@@ -1,9 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { getAuth, signOut } from "firebase/auth";
 import HighlightIcon from "@mui/icons-material/Highlight";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 function Header() {
+  const navigate = useNavigate();
+  const auth = getAuth();
+
+  const logout = () => {
+    signOut(auth).then(() => {
+      navigate("/login");
+    });
+  };
+
   return (
     <header>
       <ul>
@@ -14,11 +24,9 @@ function Header() {
           </h1>
         </li>
         <li className="logout-btn">
-          <Link to="/login" style={{ textDecoration: "none" }}>
-            <h1>
-              <LogoutIcon />
-            </h1>
-          </Link>
+          <h1 onClick={logout}>
+            <LogoutIcon />
+          </h1>
         </li>
       </ul>
     </header>

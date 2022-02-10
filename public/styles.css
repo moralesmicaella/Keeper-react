@@ -194,3 +194,10 @@ button.submit {
 .input-group {
   margin: 40px 0;
 }
+
+.error-msg {
+  color: red;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}

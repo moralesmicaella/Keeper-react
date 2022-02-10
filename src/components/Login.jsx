@@ -1,11 +1,50 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  browserLocalPersistence,
+  getAuth,
+  onAuthStateChanged,
+  setPersistence,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import HighlightIcon from "@mui/icons-material/Highlight";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import SubmitButton from "./SubmitButton";
 
 function Login() {
+  const auth = getAuth();
+
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const [currentUser, setCurrentUser] = useState(auth.currentUser);
+
+  onAuthStateChanged(auth, (user) => {
+    setCurrentUser(user);
+  });
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/");
+    }
+  });
+
+  const login = (event) => {
+    event.preventDefault();
+
+    setPersistence(auth, browserLocalPersistence).then(() => {
+      signInWithEmailAndPassword(auth, email, password)
+        .then((user) => {
+          setCurrentUser(user);
+          navigate("/");
+        })
+        .catch((error) => {
+          setErrorMessage("Incorrect username or password. Please try again.");
+        });
+    });
+  };
 
   return (
     <div className="card">
@@ -29,8 +68,14 @@ function Login() {
             type="password"
             placeholder="Enter Password"
           />
+          {errorMessage !== "" && (
+            <label className="error-msg">
+              <ErrorOutlineIcon style={{ marginRight: "10px" }} />{" "}
+              {errorMessage}
+            </label>
+          )}
         </div>
-        <SubmitButton title="Sign in" />
+        <SubmitButton title="Sign in" onClick={login} />
         <p className="signup-txt">
           Not a member? <Link to="/signup">Sign up now</Link>
         </p>
