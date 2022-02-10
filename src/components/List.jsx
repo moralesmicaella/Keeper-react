@@ -8,11 +8,11 @@ function List(props) {
 
   return (
     <div className="list-container">
-      {props.notes.map((note, index) => {
+      {props.notes.map((note) => {
         return (
           <Note
-            key={index}
-            id={index}
+            key={note.id}
+            id={note.id}
             title={note.title}
             content={note.content}
             onDelete={handleDelete}

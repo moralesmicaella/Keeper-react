@@ -8,11 +8,11 @@ function Header() {
   const navigate = useNavigate();
   const auth = getAuth();
 
-  const logout = () => {
+  function logout() {
     signOut(auth).then(() => {
       navigate("/login");
     });
-  };
+  }
 
   return (
     <header>

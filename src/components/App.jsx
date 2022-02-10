@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
 import Home from "./Home";
 import Login from "./Login";
@@ -18,6 +19,7 @@ function App() {
   };
 
   initializeApp(firebaseConfig);
+  getFirestore();
 
   return (
     <div>

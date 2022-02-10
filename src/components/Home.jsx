@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import Header from "./Header";
 import Footer from "./Footer";
 import CreateArea from "./CreateArea";
@@ -12,25 +19,40 @@ function Home() {
   const [notes, setNotes] = useState([]);
   const [currentUser, setCurrentUser] = useState(auth.currentUser);
 
+  const db = getFirestore();
+
   useEffect(() => {
     if (!currentUser) {
       navigate("/login");
+    } else {
+      getNotes();
     }
-  });
+  }, [currentUser]);
 
   onAuthStateChanged(auth, (user) => {
     setCurrentUser(user);
   });
 
   function addNote(note) {
-    setNotes([...notes, note]);
+    getNotes();
   }
 
   function deleteNote(id) {
-    setNotes(() => {
-      return notes.filter((_, index) => {
-        return id !== index;
+    deleteDoc(doc(db, "notes", id)).then(() => getNotes());
+  }
+
+  function getNotes() {
+    const notesRef = collection(db, "notes");
+    getDocs(notesRef).then((notesSnap) => {
+      const foundNotes = [];
+      notesSnap.forEach((noteDoc) => {
+        const note = noteDoc.data();
+        if (currentUser.uid === note.uid) {
+          note["id"] = noteDoc.id;
+          foundNotes.push(note);
+        }
       });
+      setNotes(foundNotes);
     });
   }
 

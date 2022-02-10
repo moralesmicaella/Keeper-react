@@ -1,8 +1,11 @@
 import React, { useRef, useState } from "react";
+import { getAuth } from "firebase/auth";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 import Zoom from "@mui/material/Zoom";
 import AddIcon from "@mui/icons-material/Add";
 
 function CreateArea(props) {
+  const auth = getAuth();
   const [note, setNote] = useState({
     title: "",
     content: "",
@@ -11,24 +14,33 @@ function CreateArea(props) {
   const [isExpanded, setExpanded] = useState(false);
   const ref = useRef(null);
 
+  const db = getFirestore();
+
   function handleChange(event) {
     const { name, value } = event.target;
     const newNote = {
       ...note,
       [name]: value,
+      uid: auth.currentUser.uid,
     };
     setNote(newNote);
   }
 
   function submitNote(event) {
+    event.preventDefault();
+
     props.onAdd(note);
 
-    setNote({
-      title: "",
-      content: "",
-    });
-
-    event.preventDefault();
+    addDoc(collection(db, "notes"), note)
+      .then((_) => {
+        setNote({
+          title: "",
+          content: "",
+        });
+      })
+      .catch((error) => {
+        console.error("Error adding document: ", error);
+      });
   }
 
   function expand() {

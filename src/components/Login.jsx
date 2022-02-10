@@ -31,7 +31,7 @@ function Login() {
     }
   });
 
-  const login = (event) => {
+  function login(event) {
     event.preventDefault();
 
     setPersistence(auth, browserLocalPersistence).then(() => {
@@ -44,7 +44,7 @@ function Login() {
           setErrorMessage("Incorrect username or password. Please try again.");
         });
     });
-  };
+  }
 
   return (
     <div className="card">

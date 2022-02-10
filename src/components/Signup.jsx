@@ -31,7 +31,7 @@ function Signup() {
     }
   });
 
-  const signup = (event) => {
+  function signup(event) {
     event.preventDefault();
 
     if (password !== passwordConf) {
@@ -63,7 +63,7 @@ function Signup() {
           });
       });
     }
-  };
+  }
 
   return (
     <div className="card">
