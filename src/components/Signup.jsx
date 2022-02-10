@@ -1,18 +1,14 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import HighlightIcon from "@mui/icons-material/Highlight";
 import SubmitButton from "./SubmitButton";
 
-function Login() {
+function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConf, setPasswordConf] = useState("");
 
   return (
     <div className="card">
-      <h1>
-        <HighlightIcon />
-        Welcome Back!
-      </h1>
+      <h1>Create an account</h1>
       <form>
         <div className="input-group">
           <label>Email</label>
@@ -29,14 +25,18 @@ function Login() {
             type="password"
             placeholder="Enter Password"
           />
+          <label>Confirm Password</label>
+          <input
+            value={passwordConf}
+            onChange={(event) => setPasswordConf(event.target.value)}
+            type="password"
+            placeholder="Re-enter Password"
+          />
         </div>
-        <SubmitButton title="Sign in" />
-        <p className="signup-txt">
-          Not a member? <Link to="/signup">Sign up now</Link>
-        </p>
+        <SubmitButton title="Register" />
       </form>
     </div>
   );
 }
 
-export default Login;
+export default Signup;
