@@ -7,13 +7,13 @@ function Header() {
   return (
     <header>
       <ul>
-        <li className="headerTitle">
+        <li className="header-title">
           <h1>
             <HighlightIcon />
             Keeper
           </h1>
         </li>
-        <li className="logoutBtn">
+        <li className="logout-btn">
           <Link to="/login" style={{ textDecoration: "none" }}>
             <h1>
               <LogoutIcon />
