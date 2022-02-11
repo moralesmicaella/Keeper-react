@@ -1,37 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  deleteDoc,
-  doc,
-} from "firebase/firestore";
+import React, { useEffect, useState, useContext } from "react";
+import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { db } from "../firebase";
+import AuthContext from "./AuthContext";
 import Header from "./Header";
 import Footer from "./Footer";
 import CreateArea from "./CreateArea";
 import List from "./List";
+import { Navigate } from "react-router-dom";
 
 function Home() {
-  const auth = getAuth();
-  const navigate = useNavigate();
+  const currentUser = useContext(AuthContext);
   const [notes, setNotes] = useState([]);
-  const [currentUser, setCurrentUser] = useState(auth.currentUser);
-
-  const db = getFirestore();
 
   useEffect(() => {
-    if (!currentUser) {
-      navigate("/login");
-    } else {
-      getNotes();
-    }
-  }, [currentUser]);
-
-  onAuthStateChanged(auth, (user) => {
-    setCurrentUser(user);
-  });
+    getNotes();
+  }, []);
 
   function addNote(note) {
     getNotes();
@@ -54,6 +37,10 @@ function Home() {
       });
       setNotes(foundNotes);
     });
+  }
+
+  if (!currentUser) {
+    return <Navigate to="/login" />;
   }
 
   return (

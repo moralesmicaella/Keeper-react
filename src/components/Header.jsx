@@ -1,12 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
 import HighlightIcon from "@mui/icons-material/Highlight";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 function Header() {
   const navigate = useNavigate();
-  const auth = getAuth();
 
   function logout() {
     signOut(auth).then(() => {

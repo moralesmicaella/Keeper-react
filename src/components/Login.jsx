@@ -1,49 +1,46 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import {
-  browserLocalPersistence,
-  getAuth,
-  onAuthStateChanged,
-  setPersistence,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import React, { useContext, useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 import HighlightIcon from "@mui/icons-material/Highlight";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import SubmitButton from "./SubmitButton";
+import AuthContext from "./AuthContext";
 
 function Login() {
-  const auth = getAuth();
-
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const [currentUser, setCurrentUser] = useState(auth.currentUser);
-
-  onAuthStateChanged(auth, (user) => {
-    setCurrentUser(user);
-  });
-
-  useEffect(() => {
-    if (currentUser) {
-      navigate("/");
-    }
-  });
+  const currentUser = useContext(AuthContext);
 
   function login(event) {
     event.preventDefault();
 
-    setPersistence(auth, browserLocalPersistence).then(() => {
-      signInWithEmailAndPassword(auth, email, password)
-        .then((user) => {
-          setCurrentUser(user);
-          navigate("/");
-        })
-        .catch((error) => {
-          setErrorMessage("Incorrect username or password. Please try again.");
-        });
-    });
+    signInWithEmailAndPassword(auth, email, password)
+      .then((user) => {
+        navigate("/");
+      })
+      .catch((error) => {
+        switch (error.code) {
+          case "auth/invalid-email":
+            setErrorMessage("Invalid email. Please try again.");
+            break;
+          case "auth/user-not-found":
+            setErrorMessage("User not found. Please sign up.");
+            break;
+          case "auth/wrong-password":
+            setErrorMessage("Wrong Password. Please try again.");
+            break;
+          default:
+            setErrorMessage(error.code);
+        }
+      });
+  }
+
+  if (currentUser) {
+    return <Navigate to="/" />;
   }
 
   return (

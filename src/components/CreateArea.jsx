@@ -1,11 +1,10 @@
 import React, { useRef, useState } from "react";
-import { getAuth } from "firebase/auth";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
+import { auth, db } from "../firebase";
 import Zoom from "@mui/material/Zoom";
 import AddIcon from "@mui/icons-material/Add";
 
 function CreateArea(props) {
-  const auth = getAuth();
   const [note, setNote] = useState({
     title: "",
     content: "",
@@ -13,8 +12,6 @@ function CreateArea(props) {
 
   const [isExpanded, setExpanded] = useState(false);
   const ref = useRef(null);
-
-  const db = getFirestore();
 
   function handleChange(event) {
     const { name, value } = event.target;
